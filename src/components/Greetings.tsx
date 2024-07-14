@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button1 from "./partials/Button1";
 
 const Greetings = () => {
@@ -16,7 +17,7 @@ const Greetings = () => {
         Trang web này sẽ giúp các bạn luyện tập ghép các câu tiếng anh một cách
         dễ dàng từ cơ bản đến nâng cao.
       </div>
-      <Button1 />
+      <Link to="/"><Button1 /></Link>
     </div>
   );
 };

@@ -2,16 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @import url('https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap');
+::-webkit-scrollbar {
+  width: 10px;
+}
 
+::-webkit-scrollbar-track {
+  background-color: #37B7C3;
+}
 
-  @layer base {
-    @font-face {
-      font-family: "Baloo Bhai 2", sans-serif;
-      font-optical-sizing: auto;
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url("https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400..800&display=swap") format('woff2');
-    }
-  } */
+::-webkit-scrollbar-thumb {
+  background-color: #071952;
+}
