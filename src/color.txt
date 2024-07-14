@@ -1,0 +1,2 @@
+Color 1: #37B7C3 // xanh nhạt
+Color 2: #071952 // xanh đậm 
