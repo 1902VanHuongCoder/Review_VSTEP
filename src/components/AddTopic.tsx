@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../firebase/firebaseConfig";
 import { FaImage } from "react-icons/fa";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { LoadingContext } from "../contexts/LoadingContext";
+import { NotificationContext } from "../contexts/NotificationContext";
 
 interface TopicImage {
   urlToDisplay: string;
@@ -17,6 +19,9 @@ const initialTopicImageState: TopicImage = {
 };
 
 const AddTopic = () => {
+  const { setLoading } = useContext(LoadingContext);
+  const { notify } = useContext(NotificationContext);
+
   const [topic, setTopic] = useState("");
   const [topicImage, setTopicImage] = useState<TopicImage>(initialTopicImageState);
 
@@ -25,8 +30,8 @@ const AddTopic = () => {
   }
 
 
-
   const handleAddTopic = async () => {
+    setLoading(true);
     const imgD = topicImage.imgDetails;
     const storageRef = ref(storage, `/topics/${imgD?.name}`); // create reference to storage in products folder
     if (imgD !== null && topic !== "") {
@@ -55,6 +60,9 @@ const AddTopic = () => {
             } catch (error) {
               console.log(error);
             }
+            setLoading(false);
+            notify();
+            setTopic("");
           });
         }
       );
@@ -71,7 +79,7 @@ const AddTopic = () => {
       setTopicImage({
         imgDetails: selectedFile,
         urlToDisplay: tempURL,
-        error: "",  
+        error: "",
       });
     }
   }
