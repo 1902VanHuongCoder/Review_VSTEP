@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "../firebase/firebaseConfig";
+import { db, storage } from "../firebase/firebaseConfig";
 import { FaImage } from "react-icons/fa";
-import {upload} from './helpers/helpers';
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 interface TopicImage {
   urlToDisplay: string;
@@ -27,21 +27,39 @@ const AddTopic = () => {
 
 
   const handleAddTopic = async () => {
-    const url = upload(topicImage.imgDetails); 
+    const imgD = topicImage.imgDetails;
+    const storageRef = ref(storage, `/topics/${imgD?.name}`); // create reference to storage in products folder
+    if (imgD !== null && topic !== "") {
+      const uploadTask = uploadBytesResumable(storageRef, imgD); // upload image to storage
+      uploadTask.on(
+        //keep tracking upload process to display nescessary informations
+        "state_changed",
+        (snapshot) => {
+          // return percent of completed upload
+          const percent = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          console.log(percent);
+        },
+        (error) => {
+          console.log(error);
+          console.log("Error");
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (rurl) => {
+            try {
+              await addDoc(collection(db, "topics"), {
+                topic: topic,
+                topicImg: rurl,
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          });
+        }
+      );
 
-    console.log(url);
-
-    if(url !== ""){
-      console.log("Recieved.")
     }
-
-    // try {
-    //   await addDoc(collection(db, "topics"), {
-    //     topic: topic,
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    // }
   }
 
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +71,7 @@ const AddTopic = () => {
       setTopicImage({
         imgDetails: selectedFile,
         urlToDisplay: tempURL,
-        error: "",
+        error: "",  
       });
     }
   }
