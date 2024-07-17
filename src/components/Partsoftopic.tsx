@@ -56,7 +56,7 @@ const Partsoftopic = () => {
         addTopic();
     }, []);
 
-    const theNumberOfPart = questions.questionss.length > 0 ? Math.ceil(questions.questionss.length / 1) : 0;
+    const theNumberOfPart = questions.questionss.length > 0 ? Math.ceil(questions.questionss.length / 5) : 0;
 
     // Create an array of theNumberOfPart length
     const partArray = Array.from({ length: theNumberOfPart });

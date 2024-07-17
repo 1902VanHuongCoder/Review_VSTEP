@@ -94,9 +94,10 @@ const AddQuestion = () => {
             setLoading(false);
             notify();
             setData({
+                ...data,
                 english_st: "",
                 vietnamese_st: "",
-                topic: "",
+              
             })
         }
     }

@@ -16,10 +16,16 @@ import { AnimatePresence } from 'framer-motion';
 import Nocomplete from './components/partials/Nocomplete';
 import { NocompleteContext } from './contexts/Nocomplete';
 import Partsoftopic from './components/Partsoftopic';
+import CorrectNo from './components/partials/CorrectNo';
+import WrongNo from './components/partials/WrongNo';
+import { correctAnswerNoContext } from './contexts/CorrectAnswerNo';
+import { wrongAnswerNoContext } from './contexts/WrongAnswerNo';
 function App() {
   const { loading } = useContext(LoadingContext);
   const { notification } = useContext(NotificationContext);
   const { nocomplete } = useContext(NocompleteContext);
+  const { correctAnswerNo } = useContext(correctAnswerNoContext);
+  const { wrongAnswerNo } = useContext(wrongAnswerNoContext);
   return (
 
     <Router>
@@ -27,7 +33,7 @@ function App() {
         <Routes>
           <Route path="/greetings" element={<Greetings />} />
           <Route path="/add/question" element={<AddQuestion />} />
-          <Route path="/partsoftopic/*" element={<Partsoftopic/>} />
+          <Route path="/partsoftopic/*" element={<Partsoftopic />} />
           <Route path="/add/topic" element={<AddTopic />} />
           <Route path="/questions/*" element={<Question />} />
           <Route path="/signup" element={<Signup />} />
@@ -37,6 +43,9 @@ function App() {
         {loading && <Loading />}
         <AnimatePresence> {notification && !loading && <Complete />}</AnimatePresence>
         <AnimatePresence> {nocomplete && !loading && <Nocomplete />}</AnimatePresence>
+        <AnimatePresence> {correctAnswerNo && !loading && <CorrectNo />}</AnimatePresence>
+        <AnimatePresence> {wrongAnswerNo && !loading && <WrongNo />}</AnimatePresence>
+
       </div>
     </Router >
 
