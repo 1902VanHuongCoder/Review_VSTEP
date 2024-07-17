@@ -12,9 +12,14 @@ import { useContext } from 'react';
 import { LoadingContext } from './contexts/LoadingContext';
 import Complete from './components/partials/Complete';
 import { NotificationContext } from './contexts/NotificationContext';
+import { AnimatePresence } from 'framer-motion';
+import Nocomplete from './components/partials/Nocomplete';
+import { NocompleteContext } from './contexts/Nocomplete';
+import Partsoftopic from './components/Partsoftopic';
 function App() {
   const { loading } = useContext(LoadingContext);
   const { notification } = useContext(NotificationContext);
+  const { nocomplete } = useContext(NocompleteContext);
   return (
 
     <Router>
@@ -22,15 +27,16 @@ function App() {
         <Routes>
           <Route path="/greetings" element={<Greetings />} />
           <Route path="/add/question" element={<AddQuestion />} />
+          <Route path="/partsoftopic/*" element={<Partsoftopic/>} />
           <Route path="/add/topic" element={<AddTopic />} />
-          <Route path="/question" element={<Question />} />
+          <Route path="/questions/*" element={<Question />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
         </Routes>
         {loading && <Loading />}
-        {notification && !loading && <Complete />}
-
+        <AnimatePresence> {notification && !loading && <Complete />}</AnimatePresence>
+        <AnimatePresence> {nocomplete && !loading && <Nocomplete />}</AnimatePresence>
       </div>
     </Router >
 

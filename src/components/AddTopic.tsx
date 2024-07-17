@@ -5,6 +5,7 @@ import { FaImage } from "react-icons/fa";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { LoadingContext } from "../contexts/LoadingContext";
 import { NotificationContext } from "../contexts/NotificationContext";
+import { NocompleteContext } from "../contexts/Nocomplete";
 
 interface TopicImage {
   urlToDisplay: string;
@@ -20,6 +21,7 @@ const initialTopicImageState: TopicImage = {
 
 const AddTopic = () => {
   const { setLoading } = useContext(LoadingContext);
+  const { notifyNocomplete } = useContext(NocompleteContext);
   const { notify } = useContext(NotificationContext);
 
   const [topic, setTopic] = useState("");
@@ -35,38 +37,45 @@ const AddTopic = () => {
     const imgD = topicImage.imgDetails;
     const storageRef = ref(storage, `/topics/${imgD?.name}`); // create reference to storage in products folder
     if (imgD !== null && topic !== "") {
-      const uploadTask = uploadBytesResumable(storageRef, imgD); // upload image to storage
-      uploadTask.on(
-        //keep tracking upload process to display nescessary informations
-        "state_changed",
-        (snapshot) => {
-          // return percent of completed upload
-          const percent = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          console.log(percent);
-        },
-        (error) => {
-          console.log(error);
-          console.log("Error");
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (rurl) => {
-            try {
-              await addDoc(collection(db, "topics"), {
-                topic: topic,
-                topicImg: rurl,
-              });
-            } catch (error) {
-              console.log(error);
-            }
+      try {
+        const uploadTask = uploadBytesResumable(storageRef, imgD); // upload image to storage
+        uploadTask.on(
+          //keep tracking upload process to display nescessary informations
+          "state_changed",
+          (snapshot) => {
+            // return percent of completed upload
+            const percent = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            console.log(percent);
+          },
+          (error) => {
+            console.log(error);
+            console.log("Error");
             setLoading(false);
-            notify();
-            setTopic("");
-          });
-        }
-      );
-
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(async (rurl) => {
+              try {
+                await addDoc(collection(db, "topics"), {
+                  topic: topic,
+                  topicImg: rurl,
+                });
+              } catch (error) {
+                console.log(error);
+                notifyNocomplete();
+                setLoading(false);
+              }
+              setLoading(false);
+              notify();
+              setTopic("");
+            });
+          }
+        );
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
     }
   }
 

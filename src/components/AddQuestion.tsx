@@ -1,6 +1,9 @@
-import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import { useContext, useEffect, useState } from "react";
 import { db } from '../firebase/firebaseConfig';
+import { LoadingContext } from "../contexts/LoadingContext";
+import { NocompleteContext } from "../contexts/Nocomplete";
+import { NotificationContext } from "../contexts/NotificationContext";
 
 interface Data {
     english_st: string,
@@ -31,7 +34,12 @@ const initializeTopics: Topics = {
 }
 
 
+
+
 const AddQuestion = () => {
+    const { setLoading } = useContext(LoadingContext);
+    const { notifyNocomplete } = useContext(NocompleteContext);
+    const { notify } = useContext(NotificationContext);
     const [data, setData] = useState<Data>(initializeData);
     const [topics, setTopics] = useState<Topics>(initializeTopics);
 
@@ -41,6 +49,10 @@ const AddQuestion = () => {
 
     const handleChangeVietnameseInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setData({ ...data, vietnamese_st: e.target.value })
+    }
+
+    const handleChooseTopic = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setData({ ...data, topic: e.target.value });
     }
 
     const addTopic = async () => {
@@ -65,6 +77,30 @@ const AddQuestion = () => {
         });
     };
 
+    const handleAddQuestion = async () => {
+        setLoading(true); 
+        if (data.english_st !== "" && data.vietnamese_st !== "" && data.topic !== "") {
+            try {
+                await addDoc(collection(db, data.topic), {
+                    english_st: data.english_st,
+                    vietnamese_st: data.vietnamese_st,
+                    topic: data.topic,
+                });
+            } catch (error) {
+                console.log(error);
+                notifyNocomplete();
+                setLoading(false);
+            }
+            setLoading(false);
+            notify();
+            setData({
+                english_st: "",
+                vietnamese_st: "",
+                topic: "",
+            })
+        }
+    }
+
     useEffect(() => {
         addTopic();
     }, []);
@@ -83,8 +119,8 @@ const AddQuestion = () => {
                 </div>
                 <div className="flex flex-col gap-y-2">
                     <label htmlFor="topic" className="font-bold text-[#071952]">Chọn chủ đề</label>
-                    <select className="w-[200px] py-2 text-center rounded-md text-[#071952] font-bold outline-none border-[2px] border-solid border-slate-200">
-                        <option>-- Chọn --</option>
+                    <select onChange={(event) => handleChooseTopic(event)} className="w-[200px] py-2 text-center rounded-md text-[#071952] font-bold outline-none border-[2px] border-solid border-slate-200">
+                        <option value="">-- Chọn --</option>
                         {
                             topics.topicss.map((item, index) => (
                                 <option key={index} value={item.topic}>{item.topic}</option>
@@ -94,7 +130,7 @@ const AddQuestion = () => {
                     </select>
                 </div>
             </div>
-            <div className="w-full flex justify-end mt-10 sm:mt-0"><button className="w-full sm:w-fit px-4 py-2 bg-[#071952] text-white rounded-xl font-bold">Thêm</button></div>
+            <div className="w-full flex justify-end mt-10 sm:mt-0"><button onClick={handleAddQuestion} className="w-full sm:w-fit px-4 py-2 bg-[#071952] text-white rounded-xl font-bold">Thêm</button></div>
         </div>
     )
 }

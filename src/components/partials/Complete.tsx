@@ -1,7 +1,6 @@
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 const Complete = () => {
     return (
-        <AnimatePresence>
             <motion.div
                 initial={{
                     bottom: '-100%'
@@ -84,8 +83,6 @@ const Complete = () => {
                     Thành công
                 </motion.h1>
             </motion.div>
-        </AnimatePresence>
-
     )
 }
 

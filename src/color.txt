@@ -1,2 +1,3 @@
 Color 1: #37B7C3 // xanh nhạt
+Color 1.1: #088395 // đậm trung bình
 Color 2: #071952 // xanh đậm 
