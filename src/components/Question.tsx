@@ -1,7 +1,7 @@
 import { collection, getDocs } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebase/firebaseConfig";
 import { AnimatePresence, motion } from 'framer-motion';
 import { correctAnswerNoContext } from "../contexts/CorrectAnswerNo";
@@ -44,13 +44,15 @@ const initializeAnswer: Answer = {
 
 const Question = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
   const { correctAnswerNotifyFunc } = useContext(correctAnswerNoContext)
   const { wrongAnswerNotifyFunc } = useContext(wrongAnswerNoContext);
   const [questions, setQuestions] = useState<Questions>(initializeQuestions);
-  const [currentQuestion, setCurrentQuestion] = useState(state.i*5 - 5);
+  const [currentQuestion, setCurrentQuestion] = useState(state.i * 5 - 5);
   const [answer, setAnswer] = useState<Answer>(initializeAnswer);
   const [answerWasRandomed, setAnswerWasRandomed] = useState<AnswerWasRandomed>(initializeAnswerWasRandomed);
-  const [numberCompleted, setNumberCompleted] = useState(1); 
+  const [numberCompleted, setNumberCompleted] = useState(1);
+
 
   const handleAnswerTheQuestion = (index: number) => {
     const newAnswerArray = [...answer.answer, answerWasRandomed.answerWasRandomed[index]];
@@ -79,12 +81,21 @@ const Question = () => {
   const handleCheckAnswer = () => {
     const str = questions.questionss[currentQuestion].english_st;
     const charactersArrayNoShuffle = str.split(" ");
+
+    console.log(answer.answer);
+    console.log(charactersArrayNoShuffle);
+
     if (arraysAreEqual(answer.answer, charactersArrayNoShuffle)) {
       correctAnswerNotifyFunc();
-      setCurrentQuestion((pre) => pre + 1); 
-      setNumberCompleted((pre) => pre + 1); 
-      setAnswerWasRandomed({...answerWasRandomed, sort: false});
-      setAnswer({answer:[]});
+      setCurrentQuestion((pre) => pre + 1);
+      setNumberCompleted((pre) => pre + 1);
+      setAnswerWasRandomed({ ...answerWasRandomed, sort: false });
+      setAnswer({ answer: [] });
+      if (numberCompleted === 5) {
+        navigate(`/partsoftopic/${state.tp}`, {
+          state: state.tp
+        });
+      }
     } else {
       wrongAnswerNotifyFunc();
     }
@@ -125,7 +136,7 @@ const Question = () => {
   }
 
 
-  const completePercentage = numberCompleted/5 * 100; 
+  const completePercentage = numberCompleted / 5 * 100;
 
 
   if (questions.questionss.length > 0) {
@@ -143,10 +154,16 @@ const Question = () => {
       <div className="w-full">
         <div className="flex justify-between items-start sm:items-center px-4 sm:px-0">
           <div className="basis-10/12 flex flex-col sm:flex-row justify-start items-start sm:items-center gap-x-4 gap-y-4 sm:gap-y-0">
-            <div className="bg-white py-3 px-4 rounded-xl shadow-xl font-bold">Câu hỏi số {currentQuestion > 9 ? currentQuestion + 1 : '0' + (currentQuestion + 1)}</div>
+            <div className="bg-white py-3 px-4 rounded-xl shadow-xl font-bold">Câu hỏi số {numberCompleted > 9 ? numberCompleted  : '0' + (numberCompleted )}</div>
             <p className="font-semibold text-white">Sắp xếp các từ tiếng Anh cho phù hợp với câu tiếng Việt:</p>
           </div>
-          <div className="text-[#071952] text-3xl sm:text-2xl cursor-pointer mt-3 sm:mt-0">
+          <div onClick={() => {
+            navigate(`/partsoftopic/${state.tp}`, {
+              state: state.tp
+            }
+            );
+            
+          }} className="text-[#071952] text-3xl sm:text-2xl cursor-pointer mt-3 sm:mt-0">
             <IoMdCloseCircleOutline />
           </div>
         </div>
@@ -193,7 +210,7 @@ const Question = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center  p-4 sm:p-0 w-full mt-10 sm:mt-0 gap-y-3 sm:gap-y-0">
         <div className="flex items-center gap-x-3">
           <div className="h-2 bg-[#071952] w-[300px] rounded-md overflow-hidden shadow-inner">
-            <div style={{width: completePercentage + '%'}} className={`h-full bg-cyan-500 shadow-lg shadow-cyan-500/50 rounded-tr-md rounded-br-md`}></div>
+            <div style={{ width: completePercentage + '%' }} className={`h-full bg-cyan-500 shadow-lg shadow-cyan-500/50 rounded-tr-md rounded-br-md`}></div>
           </div>
           <p className="text-white font-bold">{numberCompleted}/5</p>
         </div>

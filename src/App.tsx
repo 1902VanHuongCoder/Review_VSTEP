@@ -20,6 +20,7 @@ import CorrectNo from './components/partials/CorrectNo';
 import WrongNo from './components/partials/WrongNo';
 import { correctAnswerNoContext } from './contexts/CorrectAnswerNo';
 import { wrongAnswerNoContext } from './contexts/WrongAnswerNo';
+import ErrorPage from './components/partials/ErrorPage';
 function App() {
   const { loading } = useContext(LoadingContext);
   const { notification } = useContext(NotificationContext);
@@ -39,6 +40,9 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
+
+          {/* Error route */}
+          <Route path="/*" element={<ErrorPage />} />
         </Routes>
         {loading && <Loading />}
         <AnimatePresence> {notification && !loading && <Complete />}</AnimatePresence>

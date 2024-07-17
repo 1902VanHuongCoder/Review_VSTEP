@@ -22,7 +22,7 @@ const Partsoftopic = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
     const [topic] = useState(state);
-    const [questions, setQuestions] = useState<Questions>(initializeQuestions);
+    const [questions, setQuestions] = useState<Questions>(initializeQuestions); 
 
     const handleReviewVSTEP = (index: number) => {
         navigate(`/questions/${topic}`, {
@@ -30,7 +30,7 @@ const Partsoftopic = () => {
           });
     }
     const addTopic = async () => {
-        await getDocs(collection(db, topic)).then((response) => {
+        await getDocs(collection(db, state)).then((response) => {
             const resultArray: Array<Question> = [];
 
             response.docs.forEach((doc) => {
@@ -43,8 +43,6 @@ const Partsoftopic = () => {
                     }
                 )
             })
-
-            console.log(resultArray);
 
             setQuestions({
                 questionss: resultArray
