@@ -32,14 +32,14 @@ function App() {
     <Router>
       <div className="relative max-w-full overflow-x-hidden min-h-screen bg-gradient-to-t from-[#088395] from-10% to-[#37B7C3] to-30% flex justify-center items-center">
         <Routes>
-          <Route path="/greetings" element={<Greetings />} />
-          <Route path="/add/question" element={<AddQuestion />} />
-          <Route path="/partsoftopic/*" element={<Partsoftopic />} />
-          <Route path="/add/topic" element={<AddTopic />} />
-          <Route path="/questions/*" element={<Question />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/Review_VSTEP/greetings" element={<Greetings />} />
+          <Route path="/Review_VSTEP/add/question" element={<AddQuestion />} />
+          <Route path="/Review_VSTEP/partsoftopic/*" element={<Partsoftopic />} />
+          <Route path="/Review_VSTEP/add/topic" element={<AddTopic />} />
+          <Route path="/Review_VSTEP/questions/*" element={<Question />} />
+          <Route path="/Review_VSTEP/signup" element={<Signup />} />
+          <Route path="/Review_VSTEP/login" element={<Login />} />
+          <Route path="/Review_VSTEP/" element={<Home />} />
 
           {/* Error route */}
           <Route path="/*" element={<ErrorPage />} />
