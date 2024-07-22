@@ -3,7 +3,7 @@ const Topic = ({id, topic, topicImg } :{id: string; topic:string; topicImg: stri
   const navigate = useNavigate();
 
   const handleNavigateToQuestionPage = (topic: string) => {
-    navigate(`/Review_VSTEP/partsoftopic/${topic}`, {
+    navigate(`/partsoftopic/${topic}`, {
       state: topic,
     });
   }

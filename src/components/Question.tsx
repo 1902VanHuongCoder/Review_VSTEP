@@ -92,7 +92,7 @@ const Question = () => {
       setAnswerWasRandomed({ ...answerWasRandomed, sort: false });
       setAnswer({ answer: [] });
       if (numberCompleted === 5) {
-        navigate(`/Review_VSTEP/partsoftopic/${state.tp}`, {
+        navigate(`/partsoftopic/${state.tp}`, {
           state: state.tp
         });
       }
@@ -158,7 +158,7 @@ const Question = () => {
             <p className="font-semibold text-white">Sắp xếp các từ tiếng Anh cho phù hợp với câu tiếng Việt:</p>
           </div>
           <div onClick={() => {
-            navigate(`/Review_VSTEP/partsoftopic/${state.tp}`, {
+            navigate(`/partsoftopic/${state.tp}`, {
               state: state.tp
             }
             );

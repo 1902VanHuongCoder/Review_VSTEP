@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const Footer = () => {
     return (
         <div className='absolute bottom-0 max-w-[1024px] px-5 sm:px-20 py-5 bg-[#071952] mt-20 rounded-tr-3xl rounded-tl-3xl shadow-xl flex flex-col sm:flex-row gap-x-10 text-white font-custom'>
@@ -6,6 +8,7 @@ const Footer = () => {
                 <p className='mt-5 font-semibold'>
                     VSTEPREVIEW dùng để ôn luyện các mẫu câu tiếng anh hay và thường gặp. Giúp tự tin hơn khi bước vào kì thi
                 </p>
+                <div className="flex gap-x-4"><Link to="/add/topic" className="">Thêm chủ đề</Link><Link to="/add/question" className="">Thêm câu hỏi</Link></div>
             </div>
             <div className='basis-1/2 mt-10 sm:mt-0'>
                 <p className='font-bold text-xl text-[#37B7C3]'>Liên Hệ</p>

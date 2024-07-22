@@ -25,7 +25,7 @@ const Partsoftopic = () => {
     const [questions, setQuestions] = useState<Questions>(initializeQuestions); 
 
     const handleReviewVSTEP = (index: number) => {
-        navigate(`/Review_VSTEP/questions/${topic}`, {
+        navigate(`/questions/${topic}`, {
             state: {i: index, tp: topic} 
           });
     }

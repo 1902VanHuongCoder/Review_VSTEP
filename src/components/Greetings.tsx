@@ -17,7 +17,7 @@ const Greetings = () => {
         Trang web này sẽ giúp các bạn luyện tập ghép các câu tiếng anh một cách
         dễ dàng từ cơ bản đến nâng cao.
       </div>
-      <Link to="/"><Button1 /></Link>
+      <Link to="/home"><Button1 /></Link>
     </div>
   );
 };
