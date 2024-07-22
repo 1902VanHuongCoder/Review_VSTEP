@@ -6,6 +6,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { LoadingContext } from "../contexts/LoadingContext";
 import { NotificationContext } from "../contexts/NotificationContext";
 import { NocompleteContext } from "../contexts/Nocomplete";
+import { useNavigate } from "react-router-dom";
 
 interface TopicImage {
   urlToDisplay: string;
@@ -20,6 +21,7 @@ const initialTopicImageState: TopicImage = {
 };
 
 const AddTopic = () => {
+  const navigate = useNavigate();
   const { setLoading } = useContext(LoadingContext);
   const { notifyNocomplete } = useContext(NocompleteContext);
   const { notify } = useContext(NotificationContext);
@@ -69,6 +71,7 @@ const AddTopic = () => {
               setLoading(false);
               notify();
               setTopic("");
+              navigate(`/home`);
             });
           }
         );

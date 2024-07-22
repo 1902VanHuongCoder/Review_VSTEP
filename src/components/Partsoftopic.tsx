@@ -1,8 +1,12 @@
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebase/firebaseConfig";
 import { FaRegQuestionCircle } from "react-icons/fa";
+import {motion} from 'framer-motion';
+import { FaHome } from "react-icons/fa";
+
+
 interface Question {
     id: string,
     english_st: string,
@@ -61,8 +65,13 @@ const Partsoftopic = () => {
 
 
     return (
-        <div className="min-h-screen w-full max-w-[1024px] px-5 sm:px-20 py-10 font-custom">
-            <h1 className="text-4xl font-bold text-white drop-shadow-md">{state} topic</h1>
+        <motion.div 
+        initial={{ x: "100%", opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.2 }}
+        exit={{ x: "-100%" }}
+        className="min-h-screen w-full max-w-[1024px] px-5 sm:px-20 py-10 font-custom">
+            <h1 className="text-4xl font-bold text-white drop-shadow-md uppercase flex justify-between items-center"><span>{state} topic</span><Link to="/home"><FaHome /></Link></h1>
             <div className="mt-10">
                 {
                     questions.questionss.length > 0 ?
@@ -79,7 +88,7 @@ const Partsoftopic = () => {
                 }
 
             </div>
-        </div>
+        </motion.div>
     )
 }
 

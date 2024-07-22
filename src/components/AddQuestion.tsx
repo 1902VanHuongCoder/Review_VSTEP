@@ -4,6 +4,7 @@ import { db } from '../firebase/firebaseConfig';
 import { LoadingContext } from "../contexts/LoadingContext";
 import { NocompleteContext } from "../contexts/Nocomplete";
 import { NotificationContext } from "../contexts/NotificationContext";
+import { useNavigate } from "react-router-dom";
 
 interface Data {
     english_st: string,
@@ -37,6 +38,7 @@ const initializeTopics: Topics = {
 
 
 const AddQuestion = () => {
+    const navigate = useNavigate();
     const { setLoading } = useContext(LoadingContext);
     const { notifyNocomplete } = useContext(NocompleteContext);
     const { notify } = useContext(NotificationContext);
@@ -98,7 +100,8 @@ const AddQuestion = () => {
                 english_st: "",
                 vietnamese_st: "",
               
-            })
+            });
+            navigate(`/home`);
         }
     }
 

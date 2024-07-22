@@ -150,24 +150,33 @@ const Question = () => {
 
 
   return (
-    <div className="w-full max-w-[1024px] min-h-screen font-custom py-10 flex flex-col justify-between">
+    <motion.div
+      initial={{ x: "100%", opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.2 }}
+      exit={{ x: "-100%" }}
+      className="w-full max-w-[1024px] min-h-screen font-custom py-10 flex flex-col justify-between">
       <div className="w-full">
         <div className="flex justify-between items-start sm:items-center px-4 sm:px-0">
           <div className="basis-10/12 flex flex-col sm:flex-row justify-start items-start sm:items-center gap-x-4 gap-y-4 sm:gap-y-0">
-            <div className="bg-white py-3 px-4 rounded-xl shadow-xl font-bold">Câu hỏi số {numberCompleted > 9 ? numberCompleted  : '0' + (numberCompleted )}</div>
+            <div className="bg-white py-3 px-4 rounded-xl shadow-xl font-bold">Câu hỏi số {numberCompleted > 9 ? numberCompleted : '0' + (numberCompleted)}</div>
             <p className="font-semibold text-white">Sắp xếp các từ tiếng Anh cho phù hợp với câu tiếng Việt:</p>
           </div>
-          <div onClick={() => {
-            navigate(`/partsoftopic/${state.tp}`, {
-              state: state.tp
-            }
-            );
-            
-          }} className="text-[#071952] text-3xl sm:text-2xl cursor-pointer mt-3 sm:mt-0">
+          <motion.div
+            whileHover={{
+              scale: 1.3,
+            }}
+            onClick={() => {
+              navigate(`/partsoftopic/${state.tp}`, {
+                state: state.tp
+              }
+              );
+
+            }} className="text-[#071952] text-3xl sm:text-2xl cursor-pointer mt-3 sm:mt-0">
             <IoMdCloseCircleOutline />
-          </div>
+          </motion.div>
         </div>
-        <div className="w-full mt-5 sm:mt-10 italic text-[#071952] font-semibold px-3 sm:px-0 text-base">
+        <div className="w-full mt-5 sm:mt-10 italic text-[#000000] font-semibold px-3 sm:px-0 text-xl">
           <p>
             {questions.questionss[currentQuestion]?.vietnamese_st}
           </p>
@@ -176,6 +185,7 @@ const Question = () => {
           <AnimatePresence>
             {answer.answer?.map((item, index) => (
               <motion.div
+                drag
                 initial={{
                   y: 30,
                   x: 30,
@@ -201,7 +211,7 @@ const Question = () => {
         <div className="bg-white h-[2px] rounded-md my-10"></div>
         <div className="w-full flex flex-wrap justify-center sm:justify-start items-center gap-2 text-[#071952] font-bold px-4 sm:px-0">
           {answerWasRandomed.answerWasRandomed?.map((item, index) => (
-            <div onClick={() => handleAnswerTheQuestion(index)} key={index} className="px-5 py-2 bg-white rounded-2xl">{item}</div>
+            <motion.div drag  onClick={() => handleAnswerTheQuestion(index)} key={index} className="px-5 py-2 bg-white rounded-2xl">{item}</motion.div>
           ))
           }
         </div>
@@ -214,9 +224,9 @@ const Question = () => {
           </div>
           <p className="text-white font-bold">{numberCompleted}/5</p>
         </div>
-        <button onClick={handleCheckAnswer} className="w-full sm:w-fit mt-4 sm:mt-0 py-3 px-6 bg-[#071952] text-white rounded-xl shadow-xl font-bold">Kiểm tra</button>
+        <button onClick={handleCheckAnswer} className="w-full sm:w-fit mt-4 sm:mt-0 py-3 px-6 bg-[#071952] text-white rounded-xl shadow-xl font-bold hover:bg-white hover:text-[#000000]">Kiểm tra</button>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
