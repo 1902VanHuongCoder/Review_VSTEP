@@ -71,7 +71,7 @@ const Partsoftopic = () => {
         transition={{ duration: 0.2 }}
         exit={{ x: "-100%" }}
         className="min-h-screen w-full max-w-[1024px] px-5 sm:px-20 py-10 font-custom">
-            <h1 className="text-4xl font-bold text-white drop-shadow-md uppercase flex justify-between items-center"><span>{state} topic</span><Link to="/home"><FaHome /></Link></h1>
+            <h1 className="text-2xl sm:text-4xl font-bold text-white drop-shadow-md uppercase flex justify-between items-center"><span>{state} topic</span><Link to="/home"><FaHome /></Link></h1>
             <div className="mt-10">
                 {
                     questions.questionss.length > 0 ?

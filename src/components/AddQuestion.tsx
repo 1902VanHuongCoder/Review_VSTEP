@@ -4,7 +4,10 @@ import { db } from '../firebase/firebaseConfig';
 import { LoadingContext } from "../contexts/LoadingContext";
 import { NocompleteContext } from "../contexts/Nocomplete";
 import { NotificationContext } from "../contexts/NotificationContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
+import {motion} from 'framer-motion';
+
 
 interface Data {
     english_st: string,
@@ -110,8 +113,14 @@ const AddQuestion = () => {
     }, []);
 
     return (
-        <div className="min-h-screen w-full max-w-[1024px] px-5 sm:px-20 py-10 font-custom">
-            <h1 className="text-4xl font-bold text-white drop-shadow-md">Thêm câu hỏi</h1>
+        <motion.div 
+        initial={{ x: "100%", opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.2 }}
+        exit={{ x: "-100%" }}
+        
+        className="min-h-screen w-full max-w-[1024px] px-5 sm:px-20 py-10 font-custom">
+            <h1 className="text-2xl sm:text-4xl font-bold text-white drop-shadow-md uppercase flex justify-between items-center"><span>Thêm câu hỏi</span><Link to="/home"><FaHome /></Link></h1>
             <div className="mt-10 flex flex-col gap-y-8">
                 <div className="flex flex-col gap-y-2">
                     <label htmlFor="english_st" className="font-bold text-[#071952]">Câu tiếng Anh</label>
@@ -135,7 +144,7 @@ const AddQuestion = () => {
                 </div>
             </div>
             <div className="w-full flex justify-end mt-10 sm:mt-0"><button onClick={handleAddQuestion} className="w-full sm:w-fit px-4 py-2 bg-[#071952] text-white rounded-xl font-bold">Thêm</button></div>
-        </div>
+        </motion.div>
     )
 }
 
