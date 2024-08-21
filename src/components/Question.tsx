@@ -185,7 +185,7 @@ const Question = () => {
           <AnimatePresence>
             {answer.answer?.map((item, index) => (
               <motion.div
-                drag
+                
                 initial={{
                   y: 30,
                   x: 30,
