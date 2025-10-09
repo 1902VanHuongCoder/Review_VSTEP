@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+  --bg-primary: #37B7C3;
+  --bg-primary-dark: #1e293b; 
+}
+
+.dark {
+  --bg-primary: #1e293b; 
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

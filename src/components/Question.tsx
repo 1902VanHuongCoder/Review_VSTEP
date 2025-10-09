@@ -151,10 +151,10 @@ const Question = () => {
 
   return (
     <motion.div
-      initial={{ x: "100%", opacity: 0 }}
+      initial={{ x: "-100%", opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.2 }}
-      exit={{ x: "-100%" }}
+      exit={{ x: "100%" }}
       className="w-full max-w-[1024px] min-h-screen font-custom py-10 flex flex-col justify-between">
       <div className="w-full">
         <div className="flex justify-between items-start sm:items-center px-4 sm:px-0">

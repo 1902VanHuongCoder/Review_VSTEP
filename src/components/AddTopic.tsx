@@ -8,6 +8,7 @@ import { NotificationContext } from "../contexts/NotificationContext";
 import { NocompleteContext } from "../contexts/Nocomplete";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion';
+import { withAuth } from "../HOCs";
 
 
 interface TopicImage {
@@ -137,4 +138,5 @@ const AddTopic = () => {
   )
 }
 
-export default AddTopic
+const AddTopicWithAuth = withAuth(AddTopic);
+export default AddTopicWithAuth;

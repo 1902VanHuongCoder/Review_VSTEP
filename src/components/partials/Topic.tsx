@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion';
+import { withAnalytics } from "../../HOCs";
 
 const Topic = ({ id, topic, topicImg }: { id: string; topic: string; topicImg: string }) => {
   const navigate = useNavigate();
@@ -24,5 +25,5 @@ const Topic = ({ id, topic, topicImg }: { id: string; topic: string; topicImg: s
     </motion.div>
   )
 }
-
-export default Topic
+const TopicWithAnalytics = withAnalytics(Topic); 
+export default TopicWithAnalytics; 

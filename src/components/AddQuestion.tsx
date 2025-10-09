@@ -7,6 +7,7 @@ import { NotificationContext } from "../contexts/NotificationContext";
 import { Link, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import {motion} from 'framer-motion';
+import { withAuth } from "../HOCs";
 
 
 interface Data {
@@ -36,8 +37,6 @@ const initializeTopics: Topics = {
         { id: "123", topic: "Test", topicImg: "https://plus.unsplash.com/premium_photo-1720798650953-1bb37db7241c?q=80&w=1949&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }
     ],
 }
-
-
 
 
 const AddQuestion = () => {
@@ -148,4 +147,6 @@ const AddQuestion = () => {
     )
 }
 
-export default AddQuestion
+const AddQuestionProtected = withAuth(AddQuestion);
+
+export default AddQuestionProtected;

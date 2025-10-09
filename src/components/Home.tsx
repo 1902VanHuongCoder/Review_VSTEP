@@ -1,22 +1,21 @@
 import Footer from './partials/Footer'
-// import Navigation from './partials/Navigation'
-import Topics from './Topics'
-import {motion} from 'framer-motion';
+import { withPerformanceMonitoring, withTheme } from '../HOCs';
+import NavigationWithTheme from './partials/Navigation';
+import TopicsWithFetchingHOC from './Topics';
 
 const Home = () => {
+
   return (
-    <motion.div
-    initial={{ x: "100%", opacity: 0 }}
-    animate={{ x: 0, opacity: 1 }}
-    transition={{ duration: 0.2 }}
-    exit={{ x: "-100%" }}
-    className='relative w-full min-h-screen bg-[#37B7C3]'>
-        <div className=' max-w-[1024px] mx-auto h-full'>
-            <Topics />
-            <Footer />
-        </div>
-    </motion.div>
+    <div
+      className='relative w-full min-h-screen bg-primary-bg dark:bg-slate-400'>
+      <div className=' max-w-[1024px] mx-auto h-full'>
+        <NavigationWithTheme />
+        <TopicsWithFetchingHOC  />
+        <Footer />
+      </div>
+    </div>
   )
 }
 
-export default Home
+const HomeIsMeasuredPerformance = withTheme(withPerformanceMonitoring(Home)); 
+export default HomeIsMeasuredPerformance;
